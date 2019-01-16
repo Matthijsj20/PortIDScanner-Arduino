@@ -39,17 +39,24 @@ void serieel()
 
 void agecheck()
 {
+
   if (message.indexOf("$") > 0)
   {
     int age = message.toInt();
-    if (age >= 18)   
+    if (age >= 18)
     {
-     setgreen();
+      setoff();
+      correct();
+    
     }
     else
     {
-      //redled functie
+      setoff();
+      fail();
+    
     }
+    boolreadcheck = false;
+    boolserieelcheck = false;
   }
-  
+
 }

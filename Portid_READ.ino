@@ -10,6 +10,8 @@
 const int ledr = 3;
 const int ledg = 5;
 const int ledb = 6;
+const int buzzer = 7;
+const int potmeter = A5;
 
 
 const int button = 2;
@@ -32,11 +34,15 @@ void setup() {
   pinMode(button, INPUT);
   pinMode(ledr, OUTPUT);
   pinMode(ledg, OUTPUT);
-  pinMode(ledb, OUTPUT);
+  pinMode(ledb,OUTPUT);
+  pinMode(buzzer,OUTPUT);
+  pinMode(potmeter,INPUT);
+
 }
 
 
 void loop() {
+
   int buttoncheck = digitalRead(button);
   if (buttoncheck == HIGH )
   {
@@ -46,20 +52,21 @@ void loop() {
   if (boolreadcheck == true)
   {
     RFIDREAD();
+
   }
   if (serieelcheck())
-  {
+  { 
+    setoff();
     boolserieelcheck = true;
+ 
   }
 
   if (boolserieelcheck == true)
   {
     serieel();
     agecheck();
-  }
-  else
-  {
-
+  
 
   }
+
 }

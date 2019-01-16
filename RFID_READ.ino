@@ -1,32 +1,5 @@
 void RFIDREAD()
 {
-  /*
-     Initial Author: ryand1011 (https://github.com/ryand1011)
-
-     Reads data written by a program such as "rfid_write_personal_data.ino"
-
-     See: https://github.com/miguelbalboa/rfid/tree/master/examples/rfid_write_personal_data
-
-     Uses MIFARE RFID card using RFID-RC522 reader
-     Uses MFRC522 - Library
-     -----------------------------------------------------------------------------------------
-                 MFRC522      Arduino       Arduino   Arduino    Arduino          Arduino
-                 Reader/PCD   Uno/101       Mega      Nano v3    Leonardo/Micro   Pro Micro
-     Signal      Pin          Pin           Pin       Pin        Pin              Pin
-     -----------------------------------------------------------------------------------------
-     RST/Reset   RST          9             5         D9         RESET/ICSP-5     RST
-     SPI SS      SDA(SS)      10            53        D10        10               10
-     SPI MOSI    MOSI         11 / ICSP-4   51        D11        ICSP-4           16
-     SPI MISO    MISO         12 / ICSP-1   50        D12        ICSP-1           14
-     SPI SCK     SCK          13 / ICSP-3   52        D13        ICSP-3           15
-  */
-
-
-
-  //*****************************************************************************************//
-
-
-  //*****************************************************************************************//
 
 
   // Prepare key - all keys are set to FFFFFFFFFFFFh at chip delivery from the factory.
@@ -71,7 +44,7 @@ void RFIDREAD()
   status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, 4, &key, &(mfrc522.uid)); //line 834 of MFRC522.cpp file
   if (status != MFRC522::STATUS_OK) {
     Serial.print(F("Authentication failed: "));
-       buzzerfail();
+    setall();
     Serial.println(mfrc522.GetStatusCodeName(status));
     return;
   }
@@ -79,7 +52,7 @@ void RFIDREAD()
   status = mfrc522.MIFARE_Read(block, buffer1, &len);
   if (status != MFRC522::STATUS_OK) {
     Serial.print(F("Reading failed: "));
-       buzzerfail();
+    setall();
     Serial.println(mfrc522.GetStatusCodeName(status));
     return;
   }
@@ -103,7 +76,7 @@ void RFIDREAD()
   status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, 1, &key, &(mfrc522.uid)); //line 834
   if (status != MFRC522::STATUS_OK) {
     Serial.print(F("Authentication failed: "));
-       buzzerfail();
+    setall();
     Serial.println(mfrc522.GetStatusCodeName(status));
     return;
   }
@@ -111,7 +84,7 @@ void RFIDREAD()
   status = mfrc522.MIFARE_Read(block, buffer2, &len);
   if (status != MFRC522::STATUS_OK) {
     Serial.print(F("Reading failed: "));
-    buzzerfail();
+    setall();
     Serial.println(mfrc522.GetStatusCodeName(status));
     return;
   }
@@ -120,9 +93,9 @@ void RFIDREAD()
   for (uint8_t i = 0; i < 16; i++) {
     Serial.write(buffer2[i] );
   }
-   Serial.println("%");
-   buzzercorrect();
- 
+  Serial.println("%");
+  setblue();
+
 
   //----------------------------------------
 
